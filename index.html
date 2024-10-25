@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Système d’évaluation multicritère PIIA</title>
+  
+  <!-- Lien vers la feuille de style CSS -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Script différé pour s'assurer que le DOM est chargé avant l'exécution -->
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Système d’évaluation multicritère PIIA</h1>
+
+    <!-- Étape 1 : Type de projet -->
+    <div class="step active" id="step1">
+      <h2>Étape 1 : Quel type de projet doit être évalué ?</h2>
+      <br>
+      <form id="projectTypeForm">
+        <label><input type="radio" name="projectType" value="Bâtiment principal"> Bâtiment principal</label><br>
+        <label><input type="radio" name="projectType" value="Bâtiment ou construction accessoire"> Bâtiment ou construction accessoire</label><br>
+        <label><input type="radio" name="projectType" value="Projet intégré"> Projet intégré</label><br>
+        <label><input type="radio" name="projectType" value="Café-terrasse"> Café-terrasse</label><br>
+        <label><input type="radio" name="projectType" value="Enseigne"> Enseigne</label><br>
+        <label><input type="radio" name="projectType" value="Aménagement et utilisation d’un terrain"> Aménagement et utilisation d’un terrain</label><br>
+        <button type="button" class="btn" onclick="nextStep()">Étape suivante</button>
+      </form></br>
+    </div>
+
+    <!-- Étape 2 : Critères pertinents -->
+    <div class="step" id="step2">
+      <h2>Étape 2 : Quels sont les critères pertinents au projet ?</h2>
+      <p>Selon le projet à évaluer, le système affiche la liste complète ses critères prévus au règlement
+        Sélectionnez les critères qui vous semblent pertinents au projet en considérant son milieu d’insertion 
+        </p>
+      <form id="criteriaForm">
+        <label><input type="checkbox" value="Hauteur"> Hauteur</label><br>
+        <label><input type="checkbox" value="Largeur"> Largeur</label><br>
+        <label><input type="checkbox" value="Superficie"> Superficie</label><br>
+        <label><input type="checkbox" value="Marge de recul avant"> Marge de recul avant</label><br>
+        <label><input type="checkbox" value="Matériaux de revêtement"> Matériaux de revêtement</label><br>
+        <button type="button" class="btn" onclick="selectCriteria()">Étape suivante</button>
+      </form>
+    </div>
+
+    <!-- Étape 3 : Ordre d'importance -->
+    <div class="step" id="step3">
+      <h2>Étape 3 : Quel est l’ordre d’importance de ces critères ?</h2>
+      <p>Pondération ordinale : le système a éliminé le(s) critère(s) non sélectionné(s). Attribuez la position 1 au critère le plus important et la position 4 au moins important.</p>
+      <div id="ordinalRanking"></div>
+      <button type="button" class="btn" onclick="validateOrdinalRanking()">Étape suivante</button>
+    </div>
+
+    <!-- Étape 4 : Pondération cardinale -->
+    <div class="step" id="step4">
+      <h2>Étape 4 : Quelle est la valeur relative de chacun des critères ?</h2>
+      <p>Pondération cardinale : le système a reclassé les critères en ordre d’importance. Attribuez la valeur 10 au plus important (position 1) et la valeur 1 au moins important (position 4). Accordez une valeur de 2 à 9 à chacun des autres critères. Plus le chiffre est élevé, plus la valeur est grande.</p>
+      <div id="cardinalWeighting"></div>
+      <button type="button" class="btn" onclick="nextStep()">Étape suivante</button>
+    </div>
+
+    <!-- Étape 5 : Performance du projet -->
+    <div class="step" id="step5">
+      <h2>Étape 5 : Sur une échelle de 0 à 10, notez la performance du projet pour chaque critère.</h2>
+      <p>Pour chacun des critères, notez la performance du projet sur une échelle de 0 à 10</p>
+      <div id="projectRating"></div>
+      <button type="button" class="btn" onclick="calculateIndividualScore()">Calculer mon score</button>
+    </div>
+
+    <!-- Étape 6 : Score par critère -->
+    <div class="step" id="step6">
+      <h2>Étape 6 : Quel est le score obtenu par le projet pour chaque critère ?</h2>
+      <p>Pour chaque critère, le système a multiplié le résultat sur 10 obtenu à l’étape 4 par celui obtenu à l’étape 5</p>
+      <ul id="scoreList"></ul>
+      <div id="individualScore" data-score="0"></div>
+      <button type="button" class="btn" onclick="calculateFinalScore()">Calculer le score final</button>
+    </div>
+
+    <!-- Étape 7 : Score final -->
+    <div class="step" id="step7">
+      <h2>Étape 7 : Score final du projet</h2>
+      <p>Le système a additionné les résultats obtenus à l’étape 6 et les a ramenés à un score total sur 100 </p>
+      <p id="finalScore"></p>
+      <button type="button" class="btn" onclick="nextStep()">Étape suivante</button>
+    </div>
+
+    <!-- Étape 8 : Moyenne collective -->
+    <div class="step" id="step8">
+      <h2>Étape 8 : Moyenne collective des membres du comité</h2>
+      <p>Entrez le score total de chacun des participants. Le système calculera automatiquement la moyenne collective.</p>
+      <input type="number" class="participant-score" placeholder="Score Participant 1">
+      <input type="number" class="participant-score" placeholder="Score Participant 2">
+      <input type="number" class="participant-score" placeholder="Score Participant 3">
+      <input type="number" class="participant-score" placeholder="Score Participant 4">
+      <input type="number" class="participant-score" placeholder="Score Participant 5">
+      <button type="button" class="btn" onclick="calculateProjectValue()">Calculer la moyenne collective</button>
+    </div>
+
+    <!-- Étape 9 : Acceptabilité du projet -->
+    <div class="step" id="step9">
+      <h2>Étape 9 : Acceptabilité du projet</h2>
+      <p id="acceptabilityResult" class="result"></p>
+    </div>
+  </div>
+</body>
+</html>
