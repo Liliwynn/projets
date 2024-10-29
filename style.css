@@ -145,7 +145,7 @@ input[type="number"]:focus {
 #finalScore {
   font-size: 1.4rem;
   font-weight: bold;
-  color: #0056b3; /* Bleu vif */
+  color: #0056b3;
   margin-top: 1.5rem;
   text-align: center;
 }
@@ -161,30 +161,38 @@ input[type="number"]:focus {
 }
 
 .green {
-  background-color: #28a745; /* Vert vif */
+  background-color: #28a745;
   color: #ffffff;
 }
 
 .yellow {
-  background-color: #ffc107; /* Jaune vif */
+  background-color: #ffc107;
   color: #212529;
 }
 
 .orange {
-  background-color: #fd7e14; /* Orange vif */
+  background-color: #fd7e14;
   color: #ffffff;
 }
 
 .red {
-  background-color: #dc3545; /* Rouge vif */
+  background-color: #dc3545;
   color: #ffffff;
 }
 
 /* Champs d'entrée pour les scores des participants à l'étape 8 */
+.participant-scores {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+}
+
 .participant-score {
-  width: 100%; /* Largeur maximale pour afficher tout le texte du placeholder */
-  padding: 0.5rem;
-  margin-bottom: 1rem;
+  width: 100%;
+  box-sizing: content-box;
+  padding: 15px;
   font-size: 1rem;
   border: 1px solid #dfe3e8;
   border-radius: 6px;
@@ -193,6 +201,28 @@ input[type="number"]:focus {
 
 .participant-score::placeholder {
   color: #666;
+}
+
+/* Groupe de boutons pour l'étape 8 */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.button-group .btn {
+  flex: 1;
+  max-width: 48%;
+  padding: 0.6rem;
+  font-size: 1rem;
+}
+
+/* Style de surbrillance pour la recommandation sélectionnée */
+.highlighted {
+  border: 2px solid #000000;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px 0;
 }
 
 /* Responsivité pour petits écrans */
