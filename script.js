@@ -158,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function() {
     nextStep();
   }
 
+  // Fonction pour calculer et afficher le détail de la moyenne collective (Étape 9)
   window.calculateProjectValue = function() {
     const participantScores = Array.from(document.querySelectorAll('.participant-score')).map(input => parseInt(input.value));
 
@@ -168,16 +169,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const totalScore = participantScores.reduce((a, b) => a + b, 0);
     const averageScore = totalScore / participantScores.length;
+    const maxScorePerParticipant = 100; // Score maximum par participant
+    const averagePercentage = (averageScore / maxScorePerParticipant) * 100;
+
     console.log('Average score of participants:', averageScore);
 
-    document.getElementById('finalScore').innerText = `Score final du projet : ${averageScore.toFixed(2)} points`;
+    const calculationDetails = document.getElementById('calculationDetails');
+    calculationDetails.innerHTML = `
+        <p>Scores des participants : ${participantScores.join(', ')}</p>
+        <p>Somme des scores : ${totalScore}</p>
+        <p>Nombre de participants : ${participantScores.length}</p>
+        <p>Moyenne collective : ${averagePercentage.toFixed(2)}%</p>
+    `;
 
-    evaluateProjectAcceptability(averageScore);
+    document.getElementById('acceptabilityResult').dataset.averageScore = averageScore;
+
     nextStep();
-  }
+}
 
-  function evaluateProjectAcceptability(averageScore) {
+  // Fonction pour évaluer l'acceptabilité du projet (Étape 10)
+  window.evaluateProjectAcceptability = function() {
     const resultElement = document.getElementById('acceptabilityResult');
+    const averageScore = parseFloat(resultElement.dataset.averageScore);
+
     resultElement.innerHTML = ''; // Vide le contenu précédent
     resultElement.classList.remove('highlighted');
 
@@ -188,9 +202,8 @@ document.addEventListener("DOMContentLoaded", function() {
       { text: 'Projet inacceptable car il ne satisfait pas les critères mentionnés en annexe', class: 'red', threshold: 0 }
     ];
 
-    // Affiche chaque recommandation comme un div ou un p
     recommendations.forEach(rec => {
-      const item = document.createElement("div"); // Remplace <li> par <div> pour éviter le point
+      const item = document.createElement("div");
       item.textContent = rec.text;
       item.classList.add(rec.class);
       
@@ -201,5 +214,5 @@ document.addEventListener("DOMContentLoaded", function() {
       resultElement.appendChild(item);
     });
     nextStep();
-}
+  }
 });

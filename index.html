@@ -13,12 +13,17 @@
 </head>
 <body>
   <div class="container">
-    <h1>Système d’évaluation multicritère PIIA</h1>
+
+    <!-- Page de titre -->
+    <div class="step active" id="intro">
+      <h1>Système d’évaluation multicritère des projets soumis à un règlement discrétionnaire</h1>
+      <h2>Exemple : PIIA</h2>
+      <button type="button" class="btn" onclick="nextStep()">Commencer l'évaluation</button>
+    </div>
 
     <!-- Étape 1 : Type de projet -->
-    <div class="step active" id="step1">
+    <div class="step" id="step1">
       <h2>Étape 1 : Quel type de projet doit être évalué ?</h2>
-      <br>
       <form id="projectTypeForm">
         <label><input type="radio" name="projectType" value="Bâtiment principal"> Bâtiment principal</label><br>
         <label><input type="radio" name="projectType" value="Bâtiment ou construction accessoire"> Bâtiment ou construction accessoire</label><br>
@@ -30,39 +35,43 @@
       </form>
     </div>
 
-    <!-- Étape 2 : Critères pertinents -->
     <div class="step" id="step2">
       <h2>Étape 2 : Quels sont les critères pertinents au projet ?</h2>
-      <p>Selon le projet à évaluer, le système affiche la liste complète des critères prévus au règlement
-        Sélectionnez les critères qui vous semblent pertinents au projet en considérant son milieu d’insertion : 
-        </p>
+      <p>Selon le projet à évaluer, le système affiche la liste complète des critères prévus au règlement.
+      Sélectionnez les critères qui vous semblent pertinents au projet en considérant son milieu d’insertion : </p>
       <form id="criteriaForm">
         <label><input type="checkbox" value="Hauteur"> Hauteur (détails dans le règlement)</label><br>
         <label><input type="checkbox" value="Largeur"> Largeur...</label><br>
         <label><input type="checkbox" value="Superficie"> Superficie...</label><br>
         <label><input type="checkbox" value="Marge de recul avant"> Marge de recul avant...</label><br>
         <label><input type="checkbox" value="Matériaux de revêtement"> Matériaux de revêtement...</label><br>
-        <button type="button" class="btn" onclick="prevStep()">Retour</button>
-        <button type="button" class="btn" onclick="selectCriteria()">Étape suivante</button>
+        <div class="button-group">
+          <button type="button" class="btn" onclick="prevStep()">Retour</button>
+          <button type="button" class="btn" onclick="selectCriteria()">Étape suivante</button>
+        </div>
       </form>
     </div>
 
     <!-- Étape 3 : Ordre d'importance -->
     <div class="step" id="step3">
       <h2>Étape 3 : Quel est l’ordre d’importance de ces critères ?</h2>
-      <p>Pondération ordinale : le système a éliminé le(s) critère(s) non sélectionné(s). Attribuez le degré d’importance 1 au critère sélectionné le plus important et le dernier degré au critère le moins important. Par exemple, attribuez le degré 4 au critère le moins important si vous avez sélectionné 4 critères. Attribuer les degrés intermédiaires aux autres critères.</p>
+      <p>Pondération ordinale : le système a éliminé le(s) critère(s) non sélectionné(s). Attribuez le degré d’importance 1 au critère sélectionné le plus important et le dernier degré au critère le moins important.</p>
       <div id="ordinalRanking"></div>
-      <button type="button" class="btn" onclick="prevStep()">Retour</button>
-      <button type="button" class="btn" onclick="validateOrdinalRanking()">Étape suivante</button>
+      <div class="button-group">
+        <button type="button" class="btn" onclick="prevStep()">Retour</button>
+        <button type="button" class="btn" onclick="validateOrdinalRanking()">Étape suivante</button>
+      </div>
     </div>
 
     <!-- Étape 4 : Pondération cardinale -->
     <div class="step" id="step4">
       <h2>Étape 4 : Quelle est la valeur relative de chacun des critères ?</h2>
-      <p>Pondération cardinale : le système a reclassé les critères en ordre d’importance Et a Attribué la valeur 10 au plus important et la valeur 1 au moins important. Accordez une valeur de 2 à 9 à chacun des autres critères. Plus le chiffre est élevé, plus la valeur est grande.</p>
+      <p>Pondération cardinale : le système a reclassé les critères en ordre d’importance et a attribué la valeur 10 au plus important et la valeur 1 au moins important.</p>
       <div id="cardinalWeighting"></div>
-      <button type="button" class="btn" onclick="prevStep()">Retour</button>
-      <button type="button" class="btn" onclick="nextStep()">Étape suivante</button>
+      <div class="button-group">
+        <button type="button" class="btn" onclick="prevStep()">Retour</button>
+        <button type="button" class="btn" onclick="nextStep()">Étape suivante</button>
+      </div>
     </div>
 
     <!-- Étape 5 : Performance du projet -->
@@ -70,51 +79,63 @@
       <h2>Étape 5 : Sur une échelle de 0 à 10, notez la performance du projet pour chaque critère.</h2>
       <p>Pour chacun des critères, notez la performance du projet sur une échelle de 0 à 10.</p>
       <div id="projectRating"></div>
-      <button type="button" class="btn" onclick="prevStep()">Retour</button>
-      <button type="button" class="btn" onclick="calculateIndividualScore()">Calculer mon score</button>
+      <div class="button-group">
+        <button type="button" class="btn" onclick="prevStep()">Retour</button>
+        <button type="button" class="btn" onclick="calculateIndividualScore()">Calculer mon score</button>
+      </div>
     </div>
 
     <!-- Étape 6 : Score par critère -->
     <div class="step" id="step6">
       <h2>Étape 6 : Quel est le score obtenu par le projet pour chaque critère ?</h2>
-      <p>
-        Pour chaque critère, le système a multiplié le résultat sur 10 obtenu à l’étape 4 par celui obtenu à l’étape 5;</p>
       <ul id="scoreList"></ul>
       <div id="individualScore" data-score="0"></div>
-      <button type="button" class="btn" onclick="prevStep()">Retour</button>
-      <button type="button" class="btn" onclick="calculateFinalScore()">Calculer le score final</button>
+      <div class="button-group">
+        <button type="button" class="btn" onclick="prevStep()">Retour</button>
+        <button type="button" class="btn" onclick="calculateFinalScore()">Calculer le score final</button>
+      </div>
     </div>
 
     <!-- Étape 7 : Score final -->
     <div class="step" id="step7">
       <h2>Étape 7 : Score final du projet</h2>
-      <p>Le système a additionné les résultats obtenus à l’étape 6 et les a ramenés à un score total sur 100</p>
       <p id="finalScore"></p>
-      <button type="button" class="btn" onclick="prevStep()">Retour</button>
-      <button type="button" class="btn" onclick="nextStep()">Étape suivante</button>
+      <div class="button-group">
+        <button type="button" class="btn" onclick="prevStep()">Retour</button>
+        <button type="button" class="btn" onclick="nextStep()">Étape suivante</button>
+      </div>
     </div>
 
     <!-- Étape 8 : Moyenne collective -->
-<div class="step" id="step8">
-  <h2>Étape 8 : Moyenne collective des membres du comité</h2>
-  <p>Entrez le score final de chacun des participants. Le système calculera automatiquement la moyenne collective.</p>
-  <div class="participant-scores">
-    <input type="number" class="participant-score" placeholder="Score Participant 1">
-    <input type="number" class="participant-score" placeholder="Score Participant 2">
-    <input type="number" class="participant-score" placeholder="Score Participant 3">
-    <input type="number" class="participant-score" placeholder="Score Participant 4">
-    <input type="number" class="participant-score" placeholder="Score Participant 5">
-  </div>
-  <div class="button-group">
-    <button type="button" class="btn" onclick="prevStep()">Retour</button>
-    <button type="button" class="btn" onclick="calculateProjectValue()">Calculer la moyenne collective</button>
-  </div>
-</div>
+    <div class="step" id="step8">
+      <h2>Étape 8 : Moyenne collective des membres du comité</h2>
+      <p>Entrez le score final de chacun des participants. Le système calculera automatiquement la moyenne collective.</p>
+      <div class="participant-scores">
+        <input type="number" class="participant-score" placeholder="Score Participant 1">
+        <input type="number" class="participant-score" placeholder="Score Participant 2">
+        <input type="number" class="participant-score" placeholder="Score Participant 3">
+        <input type="number" class="participant-score" placeholder="Score Participant 4">
+        <input type="number" class="participant-score" placeholder="Score Participant 5">
+      </div>
+      <div class="button-group">
+        <button type="button" class="btn" onclick="prevStep()">Retour</button>
+        <button type="button" class="btn" onclick="calculateProjectValue()">Calculer la moyenne collective</button>
+      </div>
+    </div>
 
-
-    <!-- Étape 9 : Acceptabilité du projet -->
+    <!-- Étape 9 : Détail du calcul de la moyenne collective -->
     <div class="step" id="step9">
-      <h2>Étape 9 : Acceptabilité du projet</h2>
+      <h2>Étape 9 : Détail du calcul de la moyenne collective</h2>
+      <p id="calculationDetails"></p>
+      <div class="button-group">
+        <button type="button" class="btn" onclick="prevStep()">Retour</button>
+        <button type="button" class="btn" onclick="evaluateProjectAcceptability()">Étape suivante</button>
+      </div>
+    </div>
+
+    <!-- Étape 10 : Acceptabilité du projet -->
+    <div class="step" id="step10">
+      <h2>Étape 10 : Acceptabilité du projet</h2>
       <p id="acceptabilityResult" class="result"></p>
       <button type="button" class="btn" onclick="prevStep()">Retour</button>
     </div>
